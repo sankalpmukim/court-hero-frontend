@@ -1,66 +1,116 @@
-# Next.js and Auth0 Example
+# Auth0 Next.js SDK Sample Application
 
-This example shows how you can use `@auth0/nextjs-auth` to easily add authentication support to your Next.js application. It tries to cover a few topics:
+This sample demonstrates the integration of [Auth0 Next.js SDK](https://github.com/auth0/nextjs-auth0) into a Next.js application created using [create-next-app](https://nextjs.org/docs/api-reference/create-next-app). The sample is a companion to the [Auth0 Next.js SDK Quickstart](https://auth0.com/docs/quickstart/webapp/nextjs).
 
-- Signing in
-- Signing out
-- Loading the user on the server side and adding it as part of SSR ([`pages/advanced/ssr-profile.js`](pages/advanced/ssr-profile.js))
-- Loading the user on the client side and using fast/cached SSR pages ([`pages/index.js`](pages/index.js))
-- API Routes which can load the current user ([`pages/api/me.js`](pages/api/me.js))
-- Using hooks to make the user available throughout the application ([`lib/user.js`](lib/user.js))
+This sample demonstrates the following use cases:
 
-Read more: [https://auth0.com/blog/ultimate-guide-nextjs-authentication-auth0/](https://auth0.com/blog/ultimate-guide-nextjs-authentication-auth0/)
+- [Login](https://github.com/auth0-samples/auth0-nextjs-samples/blob/main/Sample-01/components/NavBar.jsx#L48-L54)
+- [Logout](https://github.com/auth0-samples/auth0-nextjs-samples/blob/main/Sample-01/components/NavBar.jsx#L80-L82)
+- [Showing the user profile](https://github.com/auth0-samples/auth0-nextjs-samples/blob/main/Sample-01/pages/profile.jsx)
+- [Protecting client-side rendered pages](https://github.com/auth0-samples/auth0-nextjs-samples/blob/main/Sample-01/pages/profile.jsx#L42-L45)
+- [Calling APIs](https://github.com/auth0-samples/auth0-nextjs-samples/blob/main/Sample-01/pages/external.jsx)
 
-## How to use
+## Project setup
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example auth0 auth0-app
-# or
-yarn create next-app --example auth0 auth0-app
-# or
-pnpm create next-app -- --example auth0 auth0-app
-```
-
-## Configuring Auth0
-
-1. Go to the [Auth0 dashboard](https://manage.auth0.com/) and create a new application of type _Regular Web Applications_ and make sure to configure the following
-2. Go to the settings page of the application
-3. Configure the following settings:
-
-- _Allowed Callback URLs_: Should be set to `http://localhost:3000/api/callback` when testing locally or typically to `https://myapp.com/api/callback` when deploying your application.
-- _Allowed Logout URLs_: Should be set to `http://localhost:3000/` when testing locally or typically to `https://myapp.com/` when deploying your application.
-
-4. Save the settings
-
-### Set up environment variables
-
-To connect the app with Auth0, you'll need to add the settings from your Auth0 application as environment variables
-
-Copy the `.env.local.example` file in this directory to `.env.local` (which will be ignored by Git):
+Use `npm` to install the project dependencies:
 
 ```bash
-cp .env.local.example .env.local
+npm install
 ```
 
-Then, open `.env.local` and add the missing environment variables:
+## Configuration
 
-- `NEXT_PUBLIC_AUTH0_DOMAIN` - Can be found in the Auth0 dashboard under `settings`. (Should be prefixed with `https://`)
-- `NEXT_PUBLIC_AUTH0_CLIENT_ID` - Can be found in the Auth0 dashboard under `settings`.
-- `AUTH0_CLIENT_SECRET` - Can be found in the Auth0 dashboard under `settings`.
-- `NEXT_PUBLIC_BASE_URL` - The base url of the application.
-- `NEXT_PUBLIC_REDIRECT_URI` - The relative url path where Auth0 redirects back to.
-- `NEXT_PUBLIC_POST_LOGOUT_REDIRECT_URI` - Where to redirect after logging out.
-- `SESSION_COOKIE_SECRET` - A unique secret used to encrypt the cookies, has to be at least 32 characters. You can use [this generator](https://generate-secret.vercel.app/32) to generate a value.
-- `SESSION_COOKIE_LIFETIME` - How long a session lasts in seconds. The default is 2 hours.
+### Create an API
 
-## Deploy on Vercel
+For the **External API** page to work, you will need to [create an API](https://auth0.com/docs/authorization/apis) using the [management dashboard](https://manage.auth0.com/#/apis). This will give you an API Identifier that you can use in the `AUTH0_AUDIENCE` environment variable below. Then you will need to [add a permission](https://auth0.com/docs/get-started/dashboard/add-api-permissions) named `read:shows` to your API. To get your app to ask for that permission, include it in the value of the `AUTH0_SCOPE` environment variable.
 
-You can deploy this app to the cloud with [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+If you do not wish to use an API or observe the API call working, you should not specify the `AUTH0_AUDIENCE` and `AUTH0_SCOPE` values in the next steps.
 
-### Deploy Your Local Project
+### Configure credentials
 
-To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket and [import to Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example).
+The project needs to be configured with your Auth0 Domain, Client ID and Client Secret for the authentication flow to work.
 
-**Important**: When you import your project on Vercel, make sure to click on **Environment Variables** and set them to match your `.env.local` file.
+To do this, first copy `.env.local.example` into a new file in the same folder called `.env.local`, and replace the values with your own Auth0 application credentials (see more info about [loading environmental variables in Next.js](https://nextjs.org/docs/basic-features/environment-variables)):
+
+```sh
+# A long secret value used to encrypt the session cookie
+AUTH0_SECRET='LONG_RANDOM_VALUE'
+# The base url of your application
+AUTH0_BASE_URL='http://localhost:3000'
+# The url of your Auth0 tenant domain
+AUTH0_ISSUER_BASE_URL='https://YOUR_AUTH0_DOMAIN.auth0.com'
+# Your Auth0 application's Client ID
+AUTH0_CLIENT_ID='YOUR_AUTH0_CLIENT_ID'
+# Your Auth0 application's Client Secret
+AUTH0_CLIENT_SECRET='YOUR_AUTH0_CLIENT_SECRET'
+# Your Auth0 API's Identifier 
+# OMIT if you do not want to use the API part of the sample
+AUTH0_AUDIENCE='YOUR_AUTH0_API_IDENTIFIER'
+# The permissions your app is asking for
+# OMIT if you do not want to use the API part of the sample
+AUTH0_SCOPE='openid profile email read:shows'
+```
+
+**Note**: Make sure you replace `AUTH0_SECRET` with your own secret (you can generate a suitable string using `openssl rand -hex 32` on the command line).
+
+## Run the sample
+
+### Compile and hot-reload for development
+
+This compiles and serves the Next.js app and starts the API server on port 3001.
+
+```bash
+npm run dev
+```
+
+## Deployment
+
+### Compiles and minifies for production
+
+```bash
+npm run build
+```
+
+### Docker build
+
+To build and run the Docker image, run `exec.sh`, or `exec.ps1` on Windows.
+
+### Run the unit tests
+
+```bash
+npm run test
+```
+
+### Run the integration tests
+
+```bash
+npm run test:integration
+```
+
+## What is Auth0?
+
+Auth0 helps you to:
+
+* Add authentication with [multiple sources](https://auth0.com/docs/identityproviders), either social identity providers such as **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce** (amongst others), or enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory, ADFS, or any SAML Identity Provider**.
+* Add authentication through more traditional **[username/password databases](https://auth0.com/docs/connections/database/custom-db)**.
+* Add support for **[linking different user accounts](https://auth0.com/docs/users/user-account-linking)** with the same user.
+* Support for generating signed [JSON Web Tokens](https://auth0.com/docs/tokens/json-web-tokens) to call your APIs and **flow the user identity** securely.
+* Analytics of how, when, and where users are logging in.
+* Pull data from other sources and add it to the user profile through [JavaScript rules](https://auth0.com/docs/rules).
+
+## Create a Free Auth0 Account
+
+1. Go to [Auth0](https://auth0.com) and click **Sign Up**.
+2. Use Google, GitHub, or Microsoft Account to login.
+
+## Issue Reporting
+
+If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/responsible-disclosure-policy) details the procedure for disclosing security issues.
+
+## Author
+
+[Auth0](https://auth0.com)
+
+## License
+
+This project is licensed under the MIT license. See the [LICENSE](./LICENSE) file for more info.
