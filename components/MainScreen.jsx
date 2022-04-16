@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 const MainScreen = () => {
-  console.log('Main screen');
+  console.log('Main screen', process.env);
   return (
     <>
       <Head>
