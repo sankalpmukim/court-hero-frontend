@@ -1,13 +1,17 @@
 import Head from 'next/head';
 import { firebaseApp } from '../_app';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import CourtDetail from '../../components/CourtDetail';
 
 export const getServerSideProps = async ({ req, params: { id } }) => {
   const db = getFirestore(firebaseApp);
   // query firebase for the status of the current court(node)
   const nodeData = await getDoc(doc(db, `nodes/${id}`));
   if (nodeData.exists()) {
-    const node = nodeData.data();
+    const { last_updated, ...node } = nodeData.data();
+    node.last_updated = last_updated.toDate().toString();
+    node.last_updated = node.last_updated.substring(0, node.last_updated.indexOf('GMT'));
+    console.log('nodeData', node);
     return {
       props: {
         id,
@@ -48,43 +52,9 @@ const BlockDetailView = ({ id, node }) => {
         <link href="https://uploads-ssl.webflow.com/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link href="https://uploads-ssl.webflow.com/img/webclip.png" rel="apple-touch-icon" />
       </Head>
-      <main>
-        {/* Json stringify node */}
-        <div>{JSON.stringify(node)}</div>
-        <div class="div-block-4">
-          <img
-            src="https://uploads-ssl.webflow.com/6258fbcd0572e9631b1f7345/625a3f9cb6cf80e0267bb779_Court%20HeroW.svg"
-            loading="lazy"
-            alt=""
-            class="image-4"
-          />
-          <div class="text-block-3">Marketplace</div>
-          <div class="text-block-3">Chat</div>
-          <div class="text-block-3">Status</div>
-          <a href="#" class="button-3 w-button">
-            Sign Out
-          </a>
-        </div>
-        <div class="div-block">
-          <img
-            src="https://uploads-ssl.webflow.com/6258fbcd0572e9631b1f7345/625a2b83193e9d5d2cf55d0f_FC.svg"
-            loading="lazy"
-            alt=""
-            class="image-2"
-          />
-        </div>
-        <h1 class="heading-2a">Available</h1>
-        <div class="text-block1">Last Checked at 4:20PM</div>
-        <div class="text-block">
-          <strong class="bold-text-2">Last Busy at 4:00PM</strong>
-        </div>
-        <div class="text-block-2">Click here for detailed view</div>
-        <div class="div-block-2">
-          <a href="#" class="button-2 w-button">
-            <strong class="bold-text-3">Other Courts</strong>
-          </a>
-        </div>
-      </main>
+      {/* Json stringify node */}
+      {/* <div>{JSON.stringify(node)}</div> */}
+      <CourtDetail {...node} />
     </>
   );
 };
