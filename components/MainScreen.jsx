@@ -13,8 +13,6 @@ const MainScreen = () => {
         <meta content="Webflow" name="generator" />
         <link href="/static/css/main.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:regular" media="all" />
-        <link href="https://uploads-ssl.webflow.com/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link href="https://uploads-ssl.webflow.com/img/webclip.png" rel="apple-touch-icon"></link>
       </Head>
       <main>
         <div className="nav">

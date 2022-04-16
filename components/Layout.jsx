@@ -14,6 +14,8 @@ const Layout = ({ children }) => (
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         crossOrigin="anonymous"
       />
+      {/* favicon */}
+      <link rel="icon" type="image/png" href="/static/images/ch.ico" />
       <link rel="stylesheet" href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css" />
       <title>Court Hero</title>
     </Head>

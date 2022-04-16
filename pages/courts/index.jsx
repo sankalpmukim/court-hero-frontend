@@ -73,8 +73,6 @@ const CourtsList = ({ courts }) => {
           href="https://fonts.googleapis.com/css?family=Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic%7CPoppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&amp;subset=devanagari,latin,latin-ext"
           media="all"
         />
-        <link href="https://uploads-ssl.webflow.com/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link href="https://uploads-ssl.webflow.com/img/webclip.png" rel="apple-touch-icon" />
       </Head>
       {/* Json stringify node */}
       {/* <div>{JSON.stringify(node)}</div> */}
