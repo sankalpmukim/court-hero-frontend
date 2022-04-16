@@ -17,12 +17,10 @@ const Layout = ({ children }) => (
       <link rel="stylesheet" href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css" />
       <title>Court Hero</title>
     </Head>
-    <main id="app" className="d-flex flex-column h-100" data-testid="layout">
-      <NavBar />
-      <hr />
-      <Container className="flex-grow-1 mt-5">{children}</Container>
-      <Footer />
-    </main>
+    {/* <NavBar /> */}
+    {/* <hr /> */}
+    {children}
+    {/* <Footer /> */}
   </>
 );
 
