@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import { firebaseApp } from '../_app';
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import { useUser } from '@auth0/nextjs-auth0';
+
 const AVAIL = `Available`;
 const SDOWN = `Server down`;
 const BUSY = `Busy`;
@@ -22,6 +24,7 @@ export const getServerSideProps = async () => {
   };
 };
 const CourtsList = ({ courts }) => {
+  const { user } = useUser();
   return (
     <>
       <Head>
@@ -65,13 +68,13 @@ const CourtsList = ({ courts }) => {
           <div class="text-block-3">Chat</div>
           <div class="text-block-3">Status</div>
           <a
-            href="/api/auth/logout"
+            href={`/api/auth/${!!user ? 'logout' : 'login'}`}
             class="button-3 w-button"
             style={{
               textDecoration: 'none',
               color: 'white'
             }}>
-            Sign Out
+            {!!user ? 'Logout' : 'Login'}
           </a>
         </div>
         <div class="div-block">
