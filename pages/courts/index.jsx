@@ -101,12 +101,12 @@ const CourtsList = ({ courts }) => {
               {courts.map(court => {
                 const { people, awake } = court;
                 const status = awake && !people ? AVAIL : !awake ? SDOWN : BUSY;
-                const color = status === AVAIL ? '#00ff00' : status === SDOWN ? '#fff' : '#ffa500';
+                const color = status === AVAIL ? 'rgba(177, 255, 255, 1)' : status === SDOWN ? '#E2E2E2' : '#FFC5A4';
                 return (
                   <tr
                     style={{ backgroundColor: color, cursor: 'pointer' }}
                     onClick={() => {
-                      window.location.href = `/courts/${Number(court.id) + 1}`;
+                      window.location.href = `/courts/${Number(court.id)}`;
                     }}>
                     <td>
                       {court.block}, {Number(court.index) + 1}
