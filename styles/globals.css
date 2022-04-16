@@ -33,3 +33,14 @@
   font-weight: bold;
   color: #009879;
 }
+
+@media (max-width: 480px) {
+  .tr-table {
+    font-size: 0.8em;
+    padding: 2rem;
+    margin: 2rem;
+  }
+  .detail-title {
+    font-size: 2rem;
+  }
+}

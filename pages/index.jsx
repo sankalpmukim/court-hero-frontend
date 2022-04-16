@@ -1,5 +1,4 @@
 import React from 'react';
-import Head from 'next/head';
 import { useUser } from '@auth0/nextjs-auth0';
 import MainScreen from '../components/MainScreen';
 import CourtsList from './courts';
