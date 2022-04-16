@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 const MainScreen = () => {
+  console.log('Main screen');
   return (
     <>
       <Head>
