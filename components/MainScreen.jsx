@@ -1,7 +1,9 @@
 import Head from 'next/head';
+import { useUser } from '@auth0/nextjs-auth0';
 
 const MainScreen = () => {
-  console.log('Main screen', process.env);
+  console.log('Main screen');
+  const { user, isLoading } = useUser();
   return (
     <>
       <Head>

@@ -57,7 +57,13 @@ const CourtDetail = ({ block, last_updated, people, awake }) => {
       </div>
       <div class="text-block-2">Click here for detailed view</div>
       <div class="div-block-2">
-        <a href="#" class="button-2 w-button">
+        <a
+          href="/courts"
+          class="button-2 w-button"
+          style={{
+            textDecoration: 'none',
+            color: 'white'
+          }}>
           <strong class="bold-text-3">Other Courts</strong>
         </a>
       </div>
