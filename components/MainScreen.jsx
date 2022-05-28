@@ -34,6 +34,10 @@ const MainScreen = () => {
             <strong>Get Started</strong>
           </a>
         </div>
+        <div>
+          {' '}
+          (Sorry Authentication currently broken. Fix and major updates coming soon. (In time for campus opening))
+        </div>
         <div className="div-block-2">
           <img src="/static/images/half-court.svg" loading="lazy" alt="" className="image-2" />
         </div>
